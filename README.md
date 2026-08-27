@@ -11,5 +11,6 @@ Similarly, SFAC can be created with SULF and WTRV at any temperature.
 Acid Behavior for SFAC and NTRO. Things it wont dissolve (includes walls): ACID, WATR, DSTW, GLAS, DMND, MERC, WTRV, SLTW, GOLD, SFAC, NITA, NITR, SULF, NTRO, MFLM.
 SFAC+NITA=NITR
 MERC+NITA=MFLM+NTRO
+PLNT+GLOW at 40C+ =BFUL
 --
-Elements: SULF Sulfur, MFLM Mercury Fulminate, MTHN Methane, CRDE Crude Oil, NPTH Naptha, SUGR Sugar, ALCH Alcohol, NTRO Nitrogen, SFAC Sulfuric Acid, NITA Nitric Acid, HELM Helium.
+Elements: SULF Sulfur, MFLM Mercury Fulminate, MTHN Methane, CRDE Crude Oil, NPTH Naptha, SUGR Sugar, ALCH Alcohol, NTRO Nitrogen, SFAC Sulfuric Acid, NITA Nitric Acid, HELM Helium, Biofuel BFUL.
