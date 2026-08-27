@@ -2,8 +2,6 @@
 
 local SULF = elements.allocate("MOD", "SULF")
 
---Sulf
-
 elements.element(SULF, elements.element(elements.DEFAULT_PT_GUNP))
 
 -- Properties
@@ -12,14 +10,31 @@ elements.property(SULF, "Description", "Sulfur powder that burns.")
 elements.property(SULF, "Colour", 0xFFD740)
 elements.property(SULF, "MenuSection", elem.SC_EXPLOSIVE)
 
-elements.property(SULF, "Flammable", 100)
-elements.property(SULF, "Explosive", 1)
+elements.property(SULF, "Flammable", 40)
+elements.property(SULF, "Explosive", 0)
 elements.property(SULF, "Weight", 70)
 elements.property(SULF, "Gravity", 0.2)
 
 -- Ignite if it gets hot
 elements.property(SULF, "HighTemperature", 474.1)
 elements.property(SULF, "HighTemperatureTransition", elements.DEFAULT_PT_FIRE)
+
+-- Biofuel
+
+local BFUL = elements.allocate("MOD", "BFUL")
+
+elements.element(BFUL, elements.element(elements.DEFAULT_PT_DESL))
+
+-- Properties
+elements.property(BFUL, "Name", "BFUL")
+elements.property(BFUL, "Description", "Biofuel, Created from plants.")
+elements.property(BFUL, "Colour", 0xFF91A15A)
+elements.property(BFUL, "MenuSection", elem.SC_LIQUID)
+
+elements.property(BFUL, "Flammable", 60)
+elements.property(BFUL, "Explosive", 0)
+elements.property(BFUL, "Weight", 35)
+elements.property(BFUL, "Gravity", 0.1)
 
 --MFLM
 
@@ -601,4 +616,43 @@ end
 
 elements.property(NITA, "Update", NITA_Update)
 elements.property(SFAC, "Update", Acid_Update)
+
+-- PLNT + GLOW -> BFUL + BFUL
+-- Both PLNT and GLOW must be at 40°C or hotter.
+
+local PLNT = tpt.el.plnt.id
+local GLOW = tpt.el.glow.id
+
+-- BFUL is your custom element
+local BFUL_ID = BFUL
+
+local function PLNT_Update(i, x, y)
+
+    -- Find GLOW touching PLNT
+    for n in sim.neighbors(x, y, 1, 1) do
+
+        local nt = sim.partProperty(n, sim.FIELD_TYPE)
+
+        if nt == GLOW then
+
+            local plnt_temp = sim.partProperty(i, sim.FIELD_TEMP)
+            local glow_temp = sim.partProperty(n, sim.FIELD_TEMP)
+
+            -- 40°C = 313.15 K
+            if plnt_temp >= 313.15
+            and glow_temp >= 313.15 then
+
+                -- PLNT -> BFUL
+                sim.partChangeType(i, BFUL_ID)
+
+                -- GLOW -> BFUL
+                sim.partChangeType(n, BFUL_ID)
+
+                return
+            end
+        end
+    end
+end
+
+elements.property(PLNT, "Update", PLNT_Update)
 --
